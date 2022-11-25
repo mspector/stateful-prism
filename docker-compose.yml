@@ -7,14 +7,10 @@ services:
       dockerfile: prism.dockerfile
       context: ./
     environment:
-      - OPENAPI_SPEC
-    volumes:
-      - .:/stateful-prism
-    command:
-      - sh
-      - -c
-      - |
-        echo -e '${OPENAPI_SPEC}' > ./openapi.yml
-        prism mock --host=0.0.0.0 ./openapi.yml
+      - OPENAPI_DIR
+      - OPENAPI_FILE=openapi.yml
+    volumes: [$OPENAPI_DIR:/openapi]
+    command: ./entrypoint.sh
     ports:
-      - "4010:4010"
+      - "3000:3000"
+
