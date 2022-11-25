@@ -15,7 +15,7 @@ app.get('/state', (req, res) => {
 
 app.post('/state', (req, res) => {
   app.set('state', req.body.state);
-  console.log('Got body:', req.body);
+  console.log(`state changed to ${req.body.state}`)
   res.sendStatus(200);
 })
 
@@ -30,6 +30,5 @@ app.listen(port, (err) => {
   if (err) {
     return console.log('something bad happened', err)
   }
-
   console.log(`server is listening on ${port}`)
 })
