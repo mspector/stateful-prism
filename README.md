@@ -3,7 +3,7 @@
 Equips a Prism mock service with a state change endpoint to enable compatibility with Pact's standalone external verifier.
 
 ## Requirements
-Requires `docker`
+The `verify.sh` script requires `docker`.
 
 ## Installation
 Images should be built (if they do not exist) upon running the `verify.sh`, but can be built manually with `docker compose build`
@@ -17,4 +17,51 @@ Verify a provider, using its OpenAPI specification, against a directory of Pacts
 For example:
 ```
 ./verify.sh cbas ../cbas/common ../cbas-ui/pacts
+```
+
+## Details
+
+For each endpoint tested, the provider OpenAPI YAML must have examples specified by the `examples` field (see "multiple examples for a parameter" in the [OpenAPI documentation](https://swagger.io/docs/specification/adding-examples/)). 
+
+Each example key must exactly match the name of the corresponding provider state in the tested Pact (`backend_data_exists` in the example below).
+
+Example OpenAPI YAML:
+```
+openapi: 3.0.3
+info: ...
+paths:
+  /data:
+    get:
+      responses:
+        '200':
+          description: "an endpoint for getting backend data"
+          content:
+            application/json:
+              ...
+              examples:
+                backend_data_exists: 
+                  value: {foo: bar}
+```
+
+Example Pact:
+```
+{
+  "consumer": {
+    "name": "frontend-website"
+  },
+  "interactions": [
+    {
+      "description": "get backend data",
+      "providerStates": [
+        {
+          "name": "backend_data_exists"
+        }
+      ],
+      ...
+    }
+    ...
+  ]
+  ...
+}
+
 ```
