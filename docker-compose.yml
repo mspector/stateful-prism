@@ -19,8 +19,8 @@ services:
       - "3000:3000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/state"]
-      interval: 3s
-      timeout: 3s
+      interval: 1s
+      timeout: 1s
       retries: 10
   
   verifier:
@@ -47,4 +47,5 @@ services:
       - --provider-name=$PROVIDER
       - --hostname=api
       - --port=3000
+      - --base-path=/prism
       - --json=/verification/report.json
