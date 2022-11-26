@@ -1,16 +1,51 @@
 version: "3.7"
 
 services:
-  prism:
-    image: prism
+  
+  api:
+    image: stateful-prism
     build:
-      dockerfile: prism.dockerfile
+      dockerfile: stateful-prism.dockerfile
       context: ./
     environment:
       - OPENAPI_DIR
       - OPENAPI_FILE=openapi.yml
-    volumes: [$OPENAPI_DIR:/openapi]
+    volumes: 
+      - type: bind
+        read_only: true
+        source: $OPENAPI_DIR
+        target: /openapi
     command: ./entrypoint.sh
     ports:
       - "3000:3000"
-
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/state"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+  
+  verifier:
+    image: pactfoundation/pact-ref-verifier:latest
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      - PACT_DIR
+      - PROVIDER
+      - REPORT_DIR
+    volumes:
+      - type: bind
+        read_only: true
+        source: $PACT_DIR
+        target: /pacts
+      - type: bind
+        read_only: false
+        source: $REPORT_DIR
+        target: /verification
+    command:
+      - --dir=/pacts
+      - --state-change-url=http://api:3000/state
+      - --provider-name=$PROVIDER
+      - --hostname=api
+      - --port=3000
+      - --json=/verification/report.json

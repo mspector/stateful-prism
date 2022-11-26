@@ -21,7 +21,7 @@ app.post('/state', (req, res) => {
 })
 
 // https://stackoverflow.com/questions/7559862/no-response-using-express-proxy-route/20539239#20539239
-app.use('/prism', function(req, res) {
+app.use('/', function(req, res) {
   var url = prismUrl + req.url;
   if (app.settings.state != null) {
     req.headers['prefer'] = `example=${app.settings.state}`
