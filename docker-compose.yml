@@ -5,7 +5,6 @@ services:
   api:
     image: stateful-prism
     build:
-      dockerfile: stateful-prism.dockerfile
       context: ./
     environment:
       - OPENAPI_DIR
