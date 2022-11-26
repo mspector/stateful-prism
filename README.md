@@ -6,7 +6,7 @@ Equips a Prism mock service with a state change endpoint to enable compatibility
 The `verify.sh` script requires `docker`.
 
 ## Installation
-Images should be built (if they do not exist) upon running the `verify.sh`, but can be built manually with `docker compose build`
+Images should be built (if they do not exist) upon running `verify.sh`, but can be built manually with `docker compose build`
 
 ## Usage
 Verify a provider, using its OpenAPI specification, against a directory of Pacts by running the `verify.sh` script with arguments as follows:
