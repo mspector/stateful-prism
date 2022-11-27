@@ -1,28 +1,6 @@
 version: "3.7"
 
 services:
-  
-  api:
-    image: stateful-prism
-    build:
-      context: ./
-    environment:
-      - OPENAPI_DIR
-      - OPENAPI_FILE=openapi.yml
-    volumes: 
-      - type: bind
-        read_only: true
-        source: $OPENAPI_DIR
-        target: /openapi
-    command: ./entrypoint.sh
-    ports:
-      - "3000:3000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/state"]
-      interval: 1s
-      timeout: 1s
-      retries: 10
-  
   verifier:
     image: pactfoundation/pact-ref-verifier:latest
     depends_on:

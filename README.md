@@ -3,20 +3,20 @@
 Equips a Prism mock service with a state change endpoint to enable compatibility with Pact's standalone external verifier.
 
 ## Requirements
-The `verify.sh` script requires `docker`.
+The `run_verify.sh` script requires `docker`.
 
 ## Installation
-Images should be built (if they do not exist) upon running `verify.sh`, but can be built manually with `docker compose build`
+Images should be built (if they do not exist) upon running `run_verify.sh`, but can be built manually with `docker compose build`
 
 ## Usage
-Verify a provider, using its OpenAPI specification, against a directory of Pacts by running the `verify.sh` script with arguments as follows:
+Verify a provider, using its OpenAPI specification, against a directory of Pacts by running the `run_verify.sh` script with arguments as follows:
 ```
-./verify.sh ${PROVIDER} ${OPENAPI_DIR} ${PACT_DIR}
+./run_verify.sh ${PROVIDER} ${OPENAPI_DIR} ${PACT_DIR}
 ```
 
 For example:
 ```
-./verify.sh cbas ../cbas/common ../cbas-ui/pacts
+./run_verify.sh cbas ../cbas/common ../cbas-ui/pacts
 ```
 
 ## Details
