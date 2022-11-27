@@ -1,3 +1,3 @@
 #!/bin/sh
-prism mock openapi/$OPENAPI_FILE &
+prism mock openapi.yml &
 node stateful-prism.js

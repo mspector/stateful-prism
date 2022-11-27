@@ -6,13 +6,12 @@ services:
     build:
       context: ./
     environment:
-      - OPENAPI_DIR
-      - OPENAPI_FILE=openapi.yml
+      - OPENAPI_YAML
     volumes: 
       - type: bind
         read_only: true
-        source: $OPENAPI_DIR
-        target: /openapi
+        source: $OPENAPI_YAML
+        target: /openapi.yml
     command: ./entrypoint.sh
     ports:
       - "3000:3000"

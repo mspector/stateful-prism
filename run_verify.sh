@@ -1,7 +1,6 @@
 #!/bin/bash
-PROVIDER=$1 \
-OPENAPI_DIR=$2 \
-PACT_DIR=$3 \
+OPENAPI_YAML=$1 \
+PACT_DIR=$2 \
 REPORT_DIR=$(pwd) \
 docker compose \
   -f docker-compose.api.yml \
